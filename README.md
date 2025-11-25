@@ -1,16 +1,64 @@
-# API Banking - Sistema Bancário
+# API Banking - Sistema Bancário com POO
 
-API RESTful de sistema bancário desenvolvida com FastAPI, SQLAlchemy e conceitos de Programação Orientada a Objetos (POO).
+API de controle de contas bancárias desenvolvida com FastAPI, implementando conceitos avançados de Programação Orientada a Objetos.
 
-## 🚀 Funcionalidades
+## 🎯 Funcionalidades
 
-- ✅ Criar conta corrente ou poupança
+- ✅ Criar contas (Corrente e Poupança)
+- ✅ Consultar saldo e informações da conta
 - ✅ Realizar depósitos
 - ✅ Realizar saques (com validação de saldo)
-- ✅ Consultar saldo
-- ✅ Listar transações
-- ✅ Obter estatísticas da conta
-- ✅ Deletar conta
+- ✅ Listar histórico de transações
+- ✅ Calcular estatísticas financeiras
+- ✅ Sistema de rendimento para poupança
+- ✅ Limite especial para conta corrente
+
+## 🧱 Conceitos POO Implementados
+
+### ✨ Abstração
+- **Classe `Conta`**: Classe abstrata base com métodos `@abstractmethod`
+- **Classe `Transacao`**: Classe abstrata para transações (Deposito, Saque, Rendimento)
+
+### 🔗 Herança
+```
+Conta (abstrata)
+├── ContaCorrente (com limite especial)
+└── ContaPoupanca (com rendimento)
+
+Transacao (abstrata)
+├── Deposito
+├── Saque
+└── Rendimento
+```
+
+### 🎭 Polimorfismo
+- `calcular_rendimento()`: comportamento diferente em cada tipo de conta
+- `executar()`: cada tipo de transação executa de forma diferente
+- `sacar()`: validação específica por tipo de conta
+
+### 🔒 Encapsulamento
+- Atributos privados (`_saldo`, `_titular`)
+- Acesso via `@property` (getters/setters)
+- Validações internas protegidas
+
+## 📊 Estruturas de Dados e Controle
+
+### Estruturas de Decisão (if/elif/else)
+- ✅ Validação de saldo antes de saque
+- ✅ Verificação de tipo de conta
+- ✅ Validação de valores positivos
+- ✅ Cálculo condicional de totais
+
+### Estruturas de Repetição (for)
+- ✅ Iteração sobre lista de transações
+- ✅ Cálculo de totais com loop
+- ✅ Listagem de histórico
+- ✅ Consultas no banco de dados
+
+### Estruturas de Dados
+- ✅ **Listas**: armazenamento de transações
+- ✅ **Dicionários**: retorno de dados estruturados
+- ✅ **Objetos**: models SQLAlchemy
 
 ## 📋 Pré-requisitos
 

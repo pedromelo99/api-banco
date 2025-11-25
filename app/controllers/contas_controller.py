@@ -3,6 +3,7 @@ from fastapi import HTTPException
 from app.models import ContaModel, TransacaoModel
 from app.poo.conta_corrente import ContaCorrente
 from app.poo.conta_poupanca import ContaPoupanca
+from app.poo.transacao import Deposito, Saque
 from datetime import datetime
 
 
@@ -61,7 +62,7 @@ def deletar_conta(db: Session, conta_id: int):
 
 
 def depositar(db: Session, conta_id: int, valor: float):
-    """Realiza um depósito na conta"""
+    """Realiza um depósito na conta usando classe Transacao"""
     
     # Buscar conta no banco
     conta_db = obter_conta(db, conta_id)
@@ -75,8 +76,11 @@ def depositar(db: Session, conta_id: int, valor: float):
     conta_obj.saldo = conta_db.saldo
     
     try:
-        # Executar depósito usando lógica POO
-        conta_obj.depositar(valor)
+        # Criar objeto Deposito (classe abstrata Transacao)
+        deposito = Deposito(valor)
+        
+        # Executar depósito usando polimorfismo
+        deposito.executar(conta_obj)
         
         # Atualizar banco de dados
         conta_db.saldo = conta_obj.saldo
@@ -84,9 +88,9 @@ def depositar(db: Session, conta_id: int, valor: float):
         # Criar registro de transação
         transacao = TransacaoModel(
             conta_id=conta_id,
-            tipo="deposito",
+            tipo=deposito.get_tipo(),
             valor=valor,
-            data=datetime.now()
+            data=deposito.data
         )
         
         db.add(transacao)
@@ -103,7 +107,7 @@ def depositar(db: Session, conta_id: int, valor: float):
 
 
 def sacar(db: Session, conta_id: int, valor: float):
-    """Realiza um saque na conta"""
+    """Realiza um saque na conta usando classe Transacao"""
     
     # Buscar conta no banco
     conta_db = obter_conta(db, conta_id)
@@ -117,7 +121,10 @@ def sacar(db: Session, conta_id: int, valor: float):
     conta_obj.saldo = conta_db.saldo
     
     try:
-        # Executar saque usando lógica POO
+        # Criar objeto Saque (classe abstrata Transacao)
+        saque = Saque(valor)
+        
+        # Executar saque (usa método sacar da conta)
         conta_obj.sacar(valor)
         
         # Atualizar banco de dados
@@ -126,9 +133,9 @@ def sacar(db: Session, conta_id: int, valor: float):
         # Criar registro de transação
         transacao = TransacaoModel(
             conta_id=conta_id,
-            tipo="saque",
+            tipo=saque.get_tipo(),
             valor=valor,
-            data=datetime.now()
+            data=saque.data
         )
         
         db.add(transacao)

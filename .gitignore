@@ -43,6 +43,7 @@ banking.db
 
 # Arquitetura
 ARQUITETURA_SIMPLES.md
+ROTEIRO_APRESENTACAO.md
 
 # Environment variables
 .env

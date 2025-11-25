@@ -8,7 +8,7 @@ class Conta(ABC):
     def __init__(self, titular: str):
         self._titular = titular
         self._saldo = 0.0
-        self._transacoes = []
+        self._transacoes = []  # Lista para armazenar histórico de transações
     
     @property
     def titular(self) -> str:
@@ -37,6 +37,43 @@ class Conta(ABC):
             "valor": valor
         })
         return True
+    
+    def obter_historico_transacoes(self) -> List[dict]:
+        """
+        Retorna histórico de transações usando estrutura de repetição explícita
+        Demonstra uso de loop for para iterar sobre estrutura de dados
+        """
+        historico = []
+        
+        # Loop explícito iterando sobre todas as transações
+        for transacao in self._transacoes:
+            historico.append({
+                "tipo": transacao["tipo"],
+                "valor": transacao["valor"]
+            })
+        
+        return historico
+    
+    def calcular_total_movimentado(self) -> dict:
+        """
+        Calcula totais de depósitos e saques usando estruturas de repetição
+        Demonstra iteração com decisão condicional
+        """
+        total_depositos = 0.0
+        total_saques = 0.0
+        
+        # Iteração sobre transações com estrutura de decisão
+        for transacao in self._transacoes:
+            if transacao["tipo"] == "deposito":
+                total_depositos += transacao["valor"]
+            elif transacao["tipo"] == "saque":
+                total_saques += transacao["valor"]
+        
+        return {
+            "total_depositos": total_depositos,
+            "total_saques": total_saques,
+            "quantidade_transacoes": len(self._transacoes)
+        }
     
     @abstractmethod
     def sacar(self, valor: float) -> bool:
