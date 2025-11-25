@@ -67,21 +67,53 @@ Transacao (abstrata)
 
 ## 🔧 Instalação
 
-1. Clone o repositório (ou extraia os arquivos)
+### 1. Clone o repositório
+```bash
+git clone https://github.com/pedromelo99/api-banco.git
+cd api-banco
+```
 
-2. Instale as dependências:
+### 2. Crie um ambiente virtual Python
+```bash
+# Windows
+python -m venv venv
+
+# Linux/Mac
+python3 -m venv venv
+```
+
+### 3. Ative o ambiente virtual
+```bash
+# Windows (PowerShell)
+.\venv\Scripts\Activate.ps1
+
+# Windows (CMD)
+venv\Scripts\activate.bat
+
+# Linux/Mac
+source venv/bin/activate
+```
+
+### 4. Instale as dependências
 ```bash
 pip install -r requirements.txt
 ```
 
 ## ▶️ Como Executar
 
-Execute o seguinte comando na raiz do projeto:
+### 1. Certifique-se de que o ambiente virtual está ativado
+Você deve ver `(venv)` no início da linha do terminal.
 
+### 2. Execute o servidor
 ```bash
+# Usando uvicorn diretamente
 uvicorn app.main:app --reload
+
+# OU usando python -m (recomendado)
+python -m uvicorn app.main:app --reload
 ```
 
+### 3. Acesse a API
 A API estará disponível em: `http://localhost:8000`
 
 ## 📚 Documentação Interativa
